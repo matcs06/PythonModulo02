@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>{{ title }}</title>
+  <style>
+    body {
+        background-color: rgb(248, 248, 248);
+        color: black;
+    }
+    h1 {
+        color: rgb(0, 140, 140);
+    }
+    a {
+        color: rgb(0, 140, 140);
+        font: negrito 20pt arial;
+    }
+  </style>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js'></script>
+</head>
+
+<body>
+  <center>
+    <h1>{{texto}}</h1>
+  </center>
+  <center>
+    <canvas id="chart" width="700" height="400"></canvas>
+    <script>
+      // bar chart data
+      var barData = {
+        labels : [
+          {% for item in labels %}
+           "{{ item }}",
+          {% endfor %}
+	],
+
+        datasets : [{
+          fillColor: "rgba(46, 49, 49, 1)",
+          strokeColor: "rgba(151,187,205,1)",
+          pointColor: "rgba(151,187,205,1)",
+          data : [
+            {% for item in values %}
+               "{{ item }}",
+              {% endfor %}
+	    ]
+          }
+        ]
+      }
+
+     // get bar chart canvas
+     var mychart = document.getElementById("chart").getContext("2d");
+
+       steps = 10
+       max = {{max}}
+
+     // draw bar chart
+     new Chart(mychart).Bar(barData, {
+       scaleOverride: true,
+       scaleSteps: steps,
+       scaleStepWidth: Math.ceil(max / steps),
+       scaleStartValue: 0,
+       scaleShowVerticalLines: true,
+       scaleShowGridLines : true,
+       barShowStroke : true,
+       scaleShowLabels: true
+       }
+     );
+    </script>
+  </center>
+  <th><a href=/>Tela Inicial</a></th>
+</body>
+</html>
